@@ -11,18 +11,29 @@
 		cursor: pointer;
 	}
 
-	.dealslist .dealcontainer .deal {
-		margin: 5px;
-		padding: 5px;
-		border: solid lightgrey 2px;
-		min-height: 100px;
-	}
+		.dealslist .dealcontainer .deal {
+			margin: 5px;
+			padding: 5px;
+			border: solid lightgrey 2px;
+			min-height: 100px;
+		}
 
-	.dealslist .dealcontainer .deal img {
-		float: left;
-		margin-right: 10px;
-		height: 100px;
-	}
+			.dealslist .dealcontainer .deal .dealimgcontainer {
+				float: left;
+				margin-right: 10px;
+				height: 100px;
+				max-width: 33%;
+			}
+			
+
+			.dealslist .dealcontainer .deal .dealtextcontainer {
+			}
+			
+
+			.dealslist .dealcontainer .deal img {
+				max-height: 100px;
+				max-width: 100%;
+			}
 
 .banner {
 	text-align: center;

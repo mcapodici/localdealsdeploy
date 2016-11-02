@@ -16,9 +16,7 @@
 				<img src="banner.png" alt="Deals Near Me" />
 			</div>
 			<div class="locatedAddress">
-				<p>
-					<span data-bind='text: message' style="font-style:italic;font-weight:bold;">Finding Location...</span>
-				</p>
+				<span data-bind='text: message' style="font-style:italic;font-weight:bold;">Finding Location...</span>
 			</div>
 
 			<div data-bind='visible: isSpinning' class="spinner">
@@ -32,18 +30,15 @@
 			<div data-bind='foreach: deals'>
 				<div class="pure-u-1 pure-u-md-1-4 dealcontainer">
 					<div class="deal" data-bind='click: navigateToDeal'>
-						<a data-bind="attr: {href: url}">
+						<div class="dealimgcontainer">
 							<img data-bind="attr: {src: image}" />
-						</a>
-						<p>
-							<a data-bind="attr: {href: url}">
-
-								<span data-bind='text: title'></span>
-							</a>
+						</div>
+						<div class="dealtextcontainer">
+							<span data-bind='text: title'></span>
 							<br />
 							<span data-bind='text: distance.toFixed(1)'></span> km,
 							<span data-bind='text: location'></span>
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>
