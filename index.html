@@ -2,36 +2,48 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
 	<link href="style.css" rel="stylesheet" />
 	<meta charset="utf-8" />
 </head>
 <body>
-	<div class="banner">
-		<img src="banner.png" alt="Deals Near Me" />
-	</div>
-	<div class="locatedAddress">
-		<span data-bind='text: message' style="font-style:italic;font-weight:bold;">Finding Location...</span>
-	</div>
-	
-	<div data-bind='visible: isSpinning' class="spinner">
-		<div class="bounce1"></div>
-		<div class="bounce2"></div>
-		<div class="bounce3"></div>
-	</div>
+	<div class="pure-g container">
+		<div class="pure-u-1-1">
+			<div class="banner">
+				<img src="banner.png" alt="Deals Near Me" />
+			</div>
+			<div class="locatedAddress">
+				<p>
+					<span data-bind='text: message' style="font-style:italic;font-weight:bold;">Finding Location...</span>
+				</p>
+			</div>
 
-	<div class="dealslist" data-bind='visible: deals().length > 0' style='display:none;'>
-		<div data-bind='foreach: deals'>
-			<div class="deal" data-bind='click: navigateToDeal'>
-				<a data-bind="attr: {href: url}">
-					<img data-bind="attr: {src: image}" />
-				</a>
-				<a data-bind="attr: {href: url}">
+			<div data-bind='visible: isSpinning' class="spinner">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			</div>
+		</div>
 
-					<span data-bind='text: title'></span>
-				</a>
-				<br />
-				<span data-bind='text: distance.toFixed(1)'></span> km,
-				<span data-bind='text: location'></span>
+		<div class="dealslist" data-bind='visible: deals().length > 0' style='display:none;'>
+			<div data-bind='foreach: deals'>
+				<div class="pure-u-1 pure-u-md-1-4 dealcontainer">
+					<div class="deal" data-bind='click: navigateToDeal'>
+						<a data-bind="attr: {href: url}">
+							<img data-bind="attr: {src: image}" />
+						</a>
+						<p>
+							<a data-bind="attr: {href: url}">
+
+								<span data-bind='text: title'></span>
+							</a>
+							<br />
+							<span data-bind='text: distance.toFixed(1)'></span> km,
+							<span data-bind='text: location'></span>
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

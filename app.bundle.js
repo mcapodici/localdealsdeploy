@@ -104,9 +104,10 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Settings = __webpack_require__(2);
-	var DealModel = __webpack_require__(3);
-	var Groupon = __webpack_require__(4);
+	var Utils = __webpack_require__(2);
+	var Settings = __webpack_require__(3);
+	var DealModel = __webpack_require__(4);
+	var Groupon = __webpack_require__(5);
 	var ko = __webpack_require__(7);
 
 	module.exports = function (deals) {
@@ -140,6 +141,7 @@
 						return new DealModel(deal);
 					});
 					ko.utils.arrayPushAll(self.deals, dealsVms);
+					self.deals.sort(Utils.sortByDistance);
 				});
 
 			}
@@ -149,6 +151,63 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	module.exports = function () {
+		Array.prototype.unique = function (elementToString) {
+			if (!elementToString) { elementToString = function (e) { return e; }; }
+			var o = {}, i, l = this.length, r = [];
+			for (i = 0; i < l; i += 1) { o[elementToString(this[i])] = this[i]; }
+			for (i in o) { r.push(o[i]); }
+			return r;
+		};
+
+		/*ignore jslint start*/
+		var countryBoxes = [{ 'country': 'AR', 'boxes': [[-73.5762695312, -55.0321289062, -53.6685546875, -21.8025390625]] }, { 'country': 'AU', 'boxes': [[158.8359375, -54.74921875, 158.958886719, -54.4723632813], [143.838574219, -43.6193359375, 148.47421875, -39.5801757813], [123.572460938, -12.4359375, 123.595214844, -12.4239257813], [112.908203125, -39.1455078125, 153.616894531, -10.0517578125]] }, { 'country': 'BE', 'boxes': [[4.2146484375, 50.7760253906, 4.44169921875, 50.900390625], [2.52490234375, 50.6976074219, 5.89248046875, 51.4911132813], [2.85546875, 49.5108886719, 6.364453125, 50.8059570312]] }, { 'country': 'BR', 'boxes': [[-74.0020507813, -33.7421875, -34.80546875, 5.25795898437]] }, { 'country': 'FR', 'boxes': [[-4.7625, 42.3404785156, 8.14033203125, 51.0971191406], [8.565625, 41.3849121094, 9.5564453125, 43.021484375]] }, { 'country': 'DE', 'boxes': [[5.85751953125, 47.2788085938, 15.0166015625, 55.0587402344]] }, { 'country': 'IE', 'boxes': [[-10.390234375, 51.4737304688, -6.02739257812, 55.3658203125]] }, { 'country': 'IL', 'boxes': [[34.2453125, 29.47734375, 35.9134765625, 33.4317382812]] }, { 'country': 'IT', 'boxes': [[8.180859375, 38.9096679688, 9.8052734375, 41.2570800781], [12.315, 35.487, 12.893, 35.885], [6.627734375, 37.9391113281, 18.4858398438, 47.0821289063], [12.435546875, 36.6878417969, 15.6346679688, 38.2958984375], [11.9364257813, 36.7459960937, 12.0512695312, 36.8430664062]] }, { 'country': 'MY', 'boxes': [[99.6462890625, 0.861962890625, 119.266308594, 7.35166015625]] }, { 'country': 'NL', 'boxes': [[3.133, 50.75, 7.217, 53.683]] }, { 'country': 'NZ', 'boxes': [[166.477636719, -47.263671875, 174.370117188, -40.4900390625], [165.889160156, -52.5703125, 169.233496094, -50.5309570312], [-176.84765625, -44.3305664062, -176.122558594, -43.717578125], [172.705957031, -41.6106445312, 178.536230469, -34.4291015625]] }, { 'country': 'SG', 'boxes': [[103.650195312, 1.26538085938, 103.996386719, 1.4470703125]] }, { 'country': 'ZA', 'boxes': [[16.4475585938, -34.7857421875, 32.8861328125, -22.1462890625], [37.5900390625, -46.962890625, 37.8876953125, -46.8240234375]] }, { 'country': 'ES', 'boxes': [[1.22333984375, 38.6588378906, 4.3220703125, 40.0750976562], [-18.160546875, 27.6463867188, -13.4229492187, 29.2372070313], [-9.23564453125, 36.0259277344, 3.30673828125, 43.7645507812]] }, { 'country': 'AE', 'boxes': [[51.568359375, 22.621484375, 56.3879882813, 26.0681640625]] }, { 'country': 'GB', 'boxes': [[-5.2623046875, 51.3904296875, -2.6623046875, 53.4192871094], [-5.65625, 50.0213867188, 1.74658203125, 55.8079589844], [-8.14482421875, 54.0512695312, -5.47041015625, 55.241796875], [-7.54296875, 54.689453125, -0.774267578125, 60.8318847656]] }, { 'country': 'US', 'boxes': [[-178.19453125, 51.6036621094, -130.0140625, 71.4076660156], [-124.709960938, 24.5423339844, -66.9870117187, 49.3696777344], [-160.243457031, 18.9639160156, -154.804199219, 22.2231445312], [172.494824219, 51.3722167969, 179.779980469, 53.0129882813]] }]
+		/*ignore jslint end*/
+
+		return {
+			// nabbed from http://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
+			distance: function (lat1, lon1, lat2, lon2) {
+				var p, c, a;
+				p = 0.017453292519943295;    // Math.PI / 180
+				c = Math.cos;
+				a = 0.5 - c((lat2 - lat1) * p) / 2 +
+						c(lat1 * p) * c(lat2 * p) *
+						(1 - c((lon2 - lon1) * p)) / 2;
+
+				return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+			},
+
+			countriesFor: function (lat, lon) {
+				var minLat, minLon, maxLat, maxLon;
+				return countryBoxes.filter(function (countryBoxSet) {
+					return countryBoxSet.boxes.some(function (boxData) {
+						minLon = boxData[0];
+						minLat = boxData[1];
+						maxLon = boxData[2];
+						maxLat = boxData[3];
+						return minLat <= lat && lat <= maxLat && minLon <= lon && lon <= maxLon;
+					});
+				}).map(function (countryBoxSet) {
+					return countryBoxSet.country;
+				});
+			},
+
+			sortByDistance: function (d1, d2) {
+				if (d1.distance < d2.distance) {
+					return -1;
+				}
+				if (d1.distance > d2.distance) {
+					return 1;
+				}
+				return 0;
+			}
+		};
+	}();
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	module.exports = function () {
@@ -162,7 +221,7 @@
 	}();
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = function (data) {
@@ -173,16 +232,16 @@
 		self.url = deal.dealUrl;
 		self.location = data.location.description;
 		self.navigateToDeal = function () {
-			//TODO: window.location.href = self.url;
+			window.location.href = self.url;
 		};
 	};
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Settings = __webpack_require__(2);
-	var Util = __webpack_require__(5);
+	var Settings = __webpack_require__(3);
+	var Util = __webpack_require__(2);
 	var $ = __webpack_require__(6);
 
 	var token = 1; // todo register as affiliate and this should be map country->token
@@ -275,65 +334,6 @@
 			supportsCountry: function (countryIsoCode)
 			{
 				return recognisedIsoCodes.indexOf(countryIsoCode) > -1;
-			}
-		};
-	}();
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	module.exports = function () {
-		Array.prototype.unique = function (elementToString) {
-			if (!elementToString) { elementToString = function (e) { return e; }; }
-			var o = {}, i, l = this.length, r = [];
-			for (i = 0; i < l; i += 1) { o[elementToString(this[i])] = this[i]; }
-			for (i in o) { r.push(o[i]); }
-			return r;
-		};
-
-		/*ignore jslint start*/
-		var countryBoxes = [{ 'country': 'AR', 'boxes': [[-73.5762695312, -55.0321289062, -53.6685546875, -21.8025390625]] }, { 'country': 'AU', 'boxes': [[158.8359375, -54.74921875, 158.958886719, -54.4723632813], [143.838574219, -43.6193359375, 148.47421875, -39.5801757813], [123.572460938, -12.4359375, 123.595214844, -12.4239257813], [112.908203125, -39.1455078125, 153.616894531, -10.0517578125]] }, { 'country': 'BE', 'boxes': [[4.2146484375, 50.7760253906, 4.44169921875, 50.900390625], [2.52490234375, 50.6976074219, 5.89248046875, 51.4911132813], [2.85546875, 49.5108886719, 6.364453125, 50.8059570312]] }, { 'country': 'BR', 'boxes': [[-74.0020507813, -33.7421875, -34.80546875, 5.25795898437]] }, { 'country': 'FR', 'boxes': [[-4.7625, 42.3404785156, 8.14033203125, 51.0971191406], [8.565625, 41.3849121094, 9.5564453125, 43.021484375]] }, { 'country': 'DE', 'boxes': [[5.85751953125, 47.2788085938, 15.0166015625, 55.0587402344]] }, { 'country': 'IE', 'boxes': [[-10.390234375, 51.4737304688, -6.02739257812, 55.3658203125]] }, { 'country': 'IL', 'boxes': [[34.2453125, 29.47734375, 35.9134765625, 33.4317382812]] }, { 'country': 'IT', 'boxes': [[8.180859375, 38.9096679688, 9.8052734375, 41.2570800781], [12.315, 35.487, 12.893, 35.885], [6.627734375, 37.9391113281, 18.4858398438, 47.0821289063], [12.435546875, 36.6878417969, 15.6346679688, 38.2958984375], [11.9364257813, 36.7459960937, 12.0512695312, 36.8430664062]] }, { 'country': 'MY', 'boxes': [[99.6462890625, 0.861962890625, 119.266308594, 7.35166015625]] }, { 'country': 'NL', 'boxes': [[3.133, 50.75, 7.217, 53.683]] }, { 'country': 'NZ', 'boxes': [[166.477636719, -47.263671875, 174.370117188, -40.4900390625], [165.889160156, -52.5703125, 169.233496094, -50.5309570312], [-176.84765625, -44.3305664062, -176.122558594, -43.717578125], [172.705957031, -41.6106445312, 178.536230469, -34.4291015625]] }, { 'country': 'SG', 'boxes': [[103.650195312, 1.26538085938, 103.996386719, 1.4470703125]] }, { 'country': 'ZA', 'boxes': [[16.4475585938, -34.7857421875, 32.8861328125, -22.1462890625], [37.5900390625, -46.962890625, 37.8876953125, -46.8240234375]] }, { 'country': 'ES', 'boxes': [[1.22333984375, 38.6588378906, 4.3220703125, 40.0750976562], [-18.160546875, 27.6463867188, -13.4229492187, 29.2372070313], [-9.23564453125, 36.0259277344, 3.30673828125, 43.7645507812]] }, { 'country': 'AE', 'boxes': [[51.568359375, 22.621484375, 56.3879882813, 26.0681640625]] }, { 'country': 'GB', 'boxes': [[-5.2623046875, 51.3904296875, -2.6623046875, 53.4192871094], [-5.65625, 50.0213867188, 1.74658203125, 55.8079589844], [-8.14482421875, 54.0512695312, -5.47041015625, 55.241796875], [-7.54296875, 54.689453125, -0.774267578125, 60.8318847656]] }, { 'country': 'US', 'boxes': [[-178.19453125, 51.6036621094, -130.0140625, 71.4076660156], [-124.709960938, 24.5423339844, -66.9870117187, 49.3696777344], [-160.243457031, 18.9639160156, -154.804199219, 22.2231445312], [172.494824219, 51.3722167969, 179.779980469, 53.0129882813]] }]
-		/*ignore jslint end*/
-
-		return {
-			// nabbed from http://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
-			distance: function (lat1, lon1, lat2, lon2) {
-				var p, c, a;
-				p = 0.017453292519943295;    // Math.PI / 180
-				c = Math.cos;
-				a = 0.5 - c((lat2 - lat1) * p) / 2 +
-						c(lat1 * p) * c(lat2 * p) *
-						(1 - c((lon2 - lon1) * p)) / 2;
-
-				return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-			},
-
-			countriesFor: function (lat, lon) {
-				var minLat, minLon, maxLat, maxLon;
-				return countryBoxes.filter(function (countryBoxSet) {
-					return countryBoxSet.boxes.some(function (boxData) {
-						minLon = boxData[0];
-						minLat = boxData[1];
-						maxLon = boxData[2];
-						maxLat = boxData[3];
-						return minLat <= lat && lat <= maxLat && minLon <= lon && lon <= maxLon;
-					});
-				}).map(function (countryBoxSet) {
-					return countryBoxSet.country;
-				});
-			},
-
-			sortByDistance: function (data) {
-				return data.sort(function (d1, d2) {
-					if (d1.distance < d2.distance) {
-						return -1;
-					}
-					if (d1.distance > d2.distance) {
-						return 1;
-					}
-					return 0;
-				});
 			}
 		};
 	}();
