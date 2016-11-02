@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="style.css" rel="stylesheet" />
+	<meta charset="utf-8" />
+</head>
+<body>
+	<div class="banner">
+		<img src="banner.png" alt="Deals Near Me" />
+	</div>
+	<div class="locatedAddress">
+		<span data-bind='text: message' style="font-style:italic;font-weight:bold;">Finding Location...</span>
+	</div>
+	
+	<div data-bind='visible: isSpinning' class="spinner">
+		<div class="bounce1"></div>
+		<div class="bounce2"></div>
+		<div class="bounce3"></div>
+	</div>
+
+	<div class="dealslist" data-bind='visible: deals().length > 0' style='display:none;'>
+		<div data-bind='foreach: deals'>
+			<div class="deal" data-bind='click: navigateToDeal'>
+				<a data-bind="attr: {href: url}">
+					<img data-bind="attr: {src: image}" />
+				</a>
+				<a data-bind="attr: {href: url}">
+
+					<span data-bind='text: title'></span>
+				</a>
+				<br />
+				<span data-bind='text: distance.toFixed(1)'></span> km,
+				<span data-bind='text: location'></span>
+			</div>
+		</div>
+	</div>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXWxxM8IgPRsEwifAPlaezMLJrRZQrvPQ"></script>
+	<script src="app.bundle.js"></script>
+</body>
+</html>
