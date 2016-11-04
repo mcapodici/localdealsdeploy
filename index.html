@@ -9,11 +9,10 @@
 	<meta charset="utf-8" />
 </head>
 <body>
-	319am
 	<div class="pure-g container">
 		<div class="pure-u-1-1">
 			<div class="banner">
-				<img src="banner.png" alt="Deals Near Me" />
+				<img src="logo.svg" />
 			</div>
 			<div class="locatedAddress">
 				<span data-bind='text: message' style="font-style:italic;font-weight:bold;">Finding Location...</span>
@@ -31,17 +30,22 @@
 				<div class="pure-u-1 pure-u-md-1-4 dealcontainer">
 					<div class="deal" data-bind='click: navigateToDeal'>
 						<div class="dealimgcontainer">
-							<img data-bind="attr: {src: image}" />
+							<img data-bind="tryImages: images" />
 						</div>
-						<div class="dealtextcontainer">
+						<div class="dealsummary">
 							<span data-bind='text: title'></span>
-							<br />
+							</div>
+						<div class="dealdistance">
 							<span data-bind='text: distance.toFixed(1)'></span> km,
 							<span data-bind='text: location'></span>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<div class="pure-u-1-1 footer">
+			Made with &#x1f616; (confusion!) at 9:05pm by <a href="https://www.martincapodici.com">Martin</a>
 		</div>
 	</div>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXWxxM8IgPRsEwifAPlaezMLJrRZQrvPQ"></script>

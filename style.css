@@ -1,8 +1,4 @@
-﻿.container {
-	margin: 10px;
-}
-
-.dealslist {
+﻿.dealslist {
 	width: 100%;
 }
 
@@ -15,24 +11,37 @@
 			margin: 5px;
 			padding: 5px;
 			border: solid lightgrey 2px;
-			min-height: 100px;
+			position: relative;
 		}
 
 			.dealslist .dealcontainer .deal .dealimgcontainer {
-				float: left;
-				margin-right: 10px;
-				height: 100px;
-				max-width: 33%;
+				width: 100%;
+				text-align: center;
+				margin-bottom: 5px;
 			}
-			
 
-			.dealslist .dealcontainer .deal .dealtextcontainer {
+			.dealslist .dealcontainer .deal .dealsummary {
+				height: 80px;
+				margin: 5px;
 			}
-			
+
+			.dealslist .dealcontainer .deal .dealdistance {
+				margin: 5px;
+				position: absolute;
+				text-align: right;
+				bottom: 0;
+				right: 0;
+				color: darkblue;
+				z-index: 100;
+				background-color: white;
+				border: 1px solid lightgray;
+				border-radius: 10px;
+				padding: 2px;
+			}
+
 
 			.dealslist .dealcontainer .deal img {
-				max-height: 100px;
-				max-width: 100%;
+				width: 100%;
 			}
 
 .banner {
@@ -43,6 +52,12 @@
 		width: 100%;
 		max-width: 600px;
 	}
+
+.footer {
+	width: 100%;
+	text-align: center;
+	margin-top: 100px;
+}
 
 body {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -57,7 +72,6 @@ h1 {
 	padding: 10px;
 	text-align: center;
 	border-radius: 5px;
-	margin: 20px 0px;
 }
 
 .spinner {
@@ -105,5 +119,15 @@ h1 {
 	40% {
 		-webkit-transform: scale(1.0);
 		transform: scale(1.0);
+	}
+}
+
+@media screen and (min-width: 48em) {
+	.container {
+		margin: 10px 10%;
+	}
+
+	.locatedAddress {
+		margin: 20px 0px;
 	}
 }
