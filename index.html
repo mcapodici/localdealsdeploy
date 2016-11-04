@@ -3,8 +3,8 @@
 <head>
 	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+	<link rel="stylesheet" href="//yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" href="//yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
 	<link href="style.css" rel="stylesheet" />
 	<meta charset="utf-8" />
 </head>
@@ -12,13 +12,22 @@
 	<div class="pure-g container">
 		<div class="pure-u-1-1">
 			<div class="banner">
-				<img src="logo.svg" />
+				<img src="logo.png" />
 			</div>
-			<div class="locatedAddress">
+			<noscript>
+				<div class="noscript">
+					<p>
+						Sorry this website requires Javascript enabled. Please enable Javascript, or
+						find deals directly by clicking this link:
+					</p>
+					<h2><a href="http://www.groupon.com">Find deals on Groupon</a></h2>
+				</div>
+			</noscript>
+			<div class="locatedAddress" data-bind='visible:true;' style='display:none;'>
 				<span data-bind='text: message' style="font-style:italic;font-weight:bold;">Finding Location...</span>
 			</div>
 
-			<div data-bind='visible: isSpinning' class="spinner">
+			<div data-bind='visible: isSpinning' class="spinner" style='display:none;'>
 				<div class="bounce1"></div>
 				<div class="bounce2"></div>
 				<div class="bounce3"></div>
@@ -34,7 +43,7 @@
 						</div>
 						<div class="dealsummary">
 							<span data-bind='text: title'></span>
-							</div>
+						</div>
 						<div class="dealdistance">
 							<span data-bind='text: distance.toFixed(1)'></span> km,
 							<span data-bind='text: location'></span>
@@ -45,10 +54,10 @@
 		</div>
 
 		<div class="pure-u-1-1 footer">
-			Made with &#x1f616; (confusion!) at 9:05pm by <a href="https://www.martincapodici.com">Martin</a>
+			Made with &#x1f616; by <a href="https://www.martincapodici.com">Martin</a>
 		</div>
 	</div>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXWxxM8IgPRsEwifAPlaezMLJrRZQrvPQ"></script>
+	<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAXWxxM8IgPRsEwifAPlaezMLJrRZQrvPQ"></script>
 	<script src="app.bundle.js"></script>
 </body>
 </html>
