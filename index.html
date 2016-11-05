@@ -24,8 +24,17 @@
 				</div>
 			</noscript>
 			<div class="locatedAddress" data-bind='visible:true;' style='display:none;'>
-				<span data-bind='text: message' style="font-style:italic;font-weight:bold;">Finding Location...</span>
+				<div>
+					<span data-bind='text: message, visible:!showChangeLocation();' style="font-style:italic;font-weight:bold;">Finding Location...</span>
+					<input id="autocomplete" data-bind='value:autoCompleteAddress, visible:showChangeLocation();' type="text" placeholder="enter address or location" />
+				</div>
+				<div>
+					<button data-bind='click:changeLocation;'>Change</button>
+				</div>
 			</div>
+			<!--<div class="changeLocation" data-bind='visible:showChangeLocation();' style='display:none;'>
+				
+			</div>-->
 
 			<div data-bind='visible: isSpinning' class="spinner" style='display:none;'>
 				<div class="bounce1"></div>
@@ -54,7 +63,7 @@
 		</div>
 
 		<div class="pure-u-1-1 footer">
-			Made with &#x1f616; by <a href="https://www.martincapodici.com">Martin</a>
+			Made by <a href="https://www.martincapodici.com">Martin</a>
 		</div>
 	</div>
 	<script src="app.bundle.js"></script>
