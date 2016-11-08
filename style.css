@@ -1,5 +1,5 @@
 ﻿#autocomplete {
-	width:100%;
+	width: 100%;
 }
 
 .locatedAddress div {
@@ -157,3 +157,20 @@ h2 {
 		margin: 20px 0px;
 	}
 }
+
+input {
+	border-radius: 0.5em;
+	height: 2em;
+	border: 1px solid #ccc;
+	outline: 0;
+	padding-left: 0.5em;
+}
+
+button {
+	height: 2em;
+}
+
+
+/* Search */
+
+

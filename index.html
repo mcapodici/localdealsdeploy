@@ -30,11 +30,10 @@
 				<h2>Search using address:</h2>
 				<div class="pure-u-1" style="text-align:center;display:block;max-width:640px;margin:15px auto;">
 					<div style="display: table-cell;width: 100%;">
-						<input id="autocomplete" type="text" placeholder="Enter your address" />
+						<input id="autocomplete" type="search" placeholder="Enter your address" />
 					</div>
 					<div style="display: table-cell;width: auto;">
-						<button data-bind="click:searchUsingField">Search</button>
-						<!-- todo loading ... for autocomplete -->
+						<button data-bind="click:searchUsingField" style="margin-left:1.25em;">Search</button>
 					</div>
 				</div>
 				<div class="pure-u-1">
@@ -66,9 +65,11 @@
 			</div>
 			<div style="display:none;" data-bind="visible:screen()===$root.screenNames.results">
 				<div class="pure-u-1" style="text-align:center;">
-					<h2>Results</h2>
+					<h2 data-bind='visible: deals().length > 0'>Results</h2>
+					<h2 data-bind='visible: deals().length === 0'>Sorry no deals were found click below to try again</h2>
 
 					<button data-bind='click:newSearch'>New Search</button>
+
 				</div>
 				<div class="dealslist" data-bind='visible: deals().length > 0'>
 					<div data-bind='foreach: deals'>
