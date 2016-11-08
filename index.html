@@ -14,6 +14,8 @@
 			<div class="banner">
 				<img src="logo.png" />
 			</div>
+		</div>
+		<div class="pure-u-1-1" style="text-align:center;">
 			<noscript>
 				<div class="noscript">
 					<p>
@@ -23,48 +25,76 @@
 					<h2><a href="http://www.groupon.com">Find deals on Groupon</a></h2>
 				</div>
 			</noscript>
-			<div class="locatedAddress" data-bind='visible:true;' style='display:none;'>
-				<div>
-					<span data-bind='text: message, visible:!showChangeLocation();' style="font-style:italic;font-weight:bold;">Finding Location...</span>
-					<input id="autocomplete" data-bind='value:autoCompleteAddress, visible:showChangeLocation();' type="text" placeholder="enter address or location" />
+			<span>Discover deals in your area. </span>
+			<div data-bind="visible:screen()===$root.screenNames.search">
+				<h2>Search using address:</h2>
+				<div class="pure-u-1" style="text-align:center;display:block;max-width:640px;margin:15px auto;">
+					<div style="display: table-cell;width: 100%;">
+						<input id="autocomplete" type="text" placeholder="Enter your address" />
+					</div>
+					<div style="display: table-cell;width: auto;">
+						<button data-bind="click:searchUsingField">Search</button>
+						<!-- todo loading ... for autocomplete -->
+					</div>
 				</div>
-				<div>
-					<button data-bind='click:changeLocation;'>Change</button>
+				<div class="pure-u-1">
+					<h2>Or use current location</h2>
+					<button data-bind="click:searchUsingLocation">Use Current Location</button>
 				</div>
 			</div>
-			<!--<div class="changeLocation" data-bind='visible:showChangeLocation();' style='display:none;'>
-				
-			</div>-->
-
-			<div data-bind='visible: isSpinning' class="spinner" style='display:none;'>
-				<div class="bounce1"></div>
-				<div class="bounce2"></div>
-				<div class="bounce3"></div>
+			<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findingLocation">
+				<div><span>Finding your location...</span></div>
+				<div class="spinner">
+					<div class="bounce1"></div>
+					<div class="bounce2"></div>
+					<div class="bounce3"></div>
+				</div>
+				<button data-bind='click:backToSearch'>Cancel</button>
 			</div>
-		</div>
+			<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findError">
+				<div><span>Sorry, cannot find your location. Your GPS is disabled or you're in a tunnel</span></div>
+				<button data-bind='click:backToSearch, enabled:canSearchUsingField'>Continue</button>
+			</div>
+			<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findingDeals">
+				<h2>Finding deals...</h2>
+				<div class="spinner">
+					<div class="bounce1"></div>
+					<div class="bounce2"></div>
+					<div class="bounce3"></div>
+				</div>
+				<button data-bind='click:backToSearch'>Cancel</button>
+			</div>
+			<div style="display:none;" data-bind="visible:screen()===$root.screenNames.results">
+				<div class="pure-u-1" style="text-align:center;">
+					<h2>Results</h2>
 
-		<div class="dealslist" data-bind='visible: deals().length > 0' style='display:none;'>
-			<div data-bind='foreach: deals'>
-				<div class="pure-u-1 pure-u-md-1-4 dealcontainer">
-					<div class="deal" data-bind='click: navigateToDeal'>
-						<div class="dealimgcontainer">
-							<img data-bind="tryImages: images" />
-						</div>
-						<div class="dealsummary">
-							<span data-bind='text: title'></span>
-						</div>
-						<div class="dealdistance">
-							<span data-bind='text: distance.toFixed(1)'></span> km,
-							<span data-bind='text: location'></span>
+					<button data-bind='click:newSearch'>New Search</button>
+				</div>
+				<div class="dealslist" data-bind='visible: deals().length > 0'>
+					<div data-bind='foreach: deals'>
+						<div class="pure-u-1 pure-u-md-1-4 dealcontainer">
+							<div class="deal" data-bind='click: navigateToDeal'>
+								<div class="dealimgcontainer">
+									<img data-bind="tryImages: images" />
+								</div>
+								<div class="dealsummary">
+									<span data-bind='text: title'></span>
+								</div>
+								<div class="dealdistance">
+									<span data-bind='text: distance.toFixed(1)'></span> km,
+									<span data-bind='text: location'></span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.noresults">
+				<div><span>Sorry, we cannot find any deals near you at this time. Try again later, or try another address.</span></div>
+				<button data-bind='click:backToSearch'>Continue</button>
+			</div>
 		</div>
 
-		<div class="pure-u-1-1 footer">
-			Made by <a href="https://www.martincapodici.com">Martin</a>
-		</div>
 	</div>
 	<script src="app.bundle.js"></script>
 </body>

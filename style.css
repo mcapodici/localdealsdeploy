@@ -19,6 +19,7 @@
 
 .dealslist {
 	width: 100%;
+	margin-top: 20px;
 }
 
 	.dealslist .dealcontainer {
@@ -82,12 +83,14 @@
 	margin-top: 100px;
 }
 
-body {
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-h1 {
-	text-align: center;
+h2 {
+	background-color: lightgoldenrodyellow;
+	line-height: 2em;
 }
 
 .locatedAddress {
@@ -98,7 +101,7 @@ h1 {
 }
 
 .spinner {
-	margin: 100px auto 0;
+	margin: 50px auto 50px;
 	width: 70px;
 	text-align: center;
 }
