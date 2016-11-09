@@ -26,76 +26,79 @@
 				</div>
 			</noscript>
 			<span>Discover deals in your area. </span>
-			<div data-bind="visible:screen()===$root.screenNames.search">
-				<h2>Search using address:</h2>
-				<div class="pure-u-1" style="text-align:center;display:block;max-width:640px;margin:15px auto;">
-					<div style="display: table-cell;width: 100%;">
-						<input id="autocomplete" type="search" placeholder="Enter your address" />
-					</div>
-					<div style="display: table-cell;width: auto;">
-						<button data-bind="click:searchUsingField" style="margin-left:1.25em;">Search</button>
-					</div>
+		</div>
+		<!-- search -->
+		<div class="pure-u-1-1" style="text-align:center;" data-bind="visible:screen()===$root.screenNames.search">
+			<h2>Search using address:</h2>
+			<div class="pure-u-1" style="text-align:center;display:block;max-width:640px;margin:15px auto;">
+				<div style="display: table-cell;width: 100%;">
+					<input id="autocomplete" type="search" placeholder="Enter your address" />
 				</div>
-				<div class="pure-u-1">
-					<h2>Or use current location</h2>
-					<button data-bind="click:searchUsingLocation">Use Current Location</button>
+				<div style="display: table-cell;width: auto;">
+					<button data-bind="click:searchUsingField" style="margin-left:1.25em;">Search</button>
 				</div>
 			</div>
-			<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findingLocation">
-				<div><span>Finding your location...</span></div>
-				<div class="spinner">
-					<div class="bounce1"></div>
-					<div class="bounce2"></div>
-					<div class="bounce3"></div>
-				</div>
-				<button data-bind='click:backToSearch'>Cancel</button>
+			<div class="pure-u-1">
+				<h2>Or use current location</h2>
+				<button data-bind="click:searchUsingLocation">Use Current Location</button>
 			</div>
-			<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findError">
-				<div><span>Sorry, cannot find your location. Your GPS is disabled or you're in a tunnel</span></div>
-				<button data-bind='click:backToSearch, enabled:canSearchUsingField'>Continue</button>
+		</div>
+		<!-- findingLocation -->
+		<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findingLocation">
+			<h2>Finding your location...</h2>
+			<div class="spinner">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
 			</div>
-			<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findingDeals">
-				<h2>Finding deals...</h2>
-				<div class="spinner">
-					<div class="bounce1"></div>
-					<div class="bounce2"></div>
-					<div class="bounce3"></div>
-				</div>
-				<button data-bind='click:backToSearch'>Cancel</button>
+			<button data-bind='click:backToSearch'>Cancel</button>
+		</div>
+		<!-- findError -->
+		<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findError">
+			<div><span>Sorry, cannot find your location. Your GPS is disabled or you're in a tunnel</span></div>
+			<button data-bind='click:backToSearch, enabled:canSearchUsingField'>Continue</button>
+		</div>
+		<!-- findingDeals -->
+		<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.findingDeals">
+			<h2>Finding deals...</h2>
+			<div class="spinner">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
 			</div>
-			<div style="display:none;" data-bind="visible:screen()===$root.screenNames.results">
-				<div class="pure-u-1" style="text-align:center;">
-					<h2 data-bind='visible: deals().length > 0'>Results</h2>
-					<h2 data-bind='visible: deals().length === 0'>Sorry no deals were found click below to try again</h2>
-
-					<button data-bind='click:newSearch'>New Search</button>
-
-				</div>
-				<div class="dealslist" data-bind='visible: deals().length > 0'>
-					<div data-bind='foreach: deals'>
-						<div class="pure-u-1 pure-u-md-1-4 dealcontainer">
-							<div class="deal" data-bind='click: navigateToDeal'>
-								<div class="dealimgcontainer">
-									<img data-bind="tryImages: images" />
-								</div>
-								<div class="dealsummary">
-									<span data-bind='text: title'></span>
-								</div>
-								<div class="dealdistance">
-									<span data-bind='text: distance.toFixed(1)'></span> km,
-									<span data-bind='text: location'></span>
-								</div>
+			<button data-bind='click:backToSearch'>Cancel</button>
+		</div>
+		<!-- results -->
+		<div style="display:none;width:100%;" data-bind="visible:screen()===$root.screenNames.results">
+			<div class="pure-u-1-1" style="text-align:center">
+				<h2 data-bind='visible: deals().length > 0'>Results</h2>
+				<h2 data-bind='visible: deals().length === 0'>Sorry no deals were found click below to try again</h2>
+				<button data-bind='click:newSearch'>New Search</button>
+			</div>
+			<div class="dealslist" data-bind='visible: deals().length > 0'>
+				<div data-bind='foreach: deals'>
+					<div class="pure-u-1 pure-u-md-1-4 dealcontainer">
+						<div class="deal" data-bind='click: navigateToDeal'>
+							<div class="dealimgcontainer">
+								<img data-bind="tryImages: images" />
+							</div>
+							<div class="dealsummary">
+								<span data-bind='text: title'></span>
+							</div>
+							<div class="dealdistance">
+								<span data-bind='text: distance.toFixed(1)'></span> km,
+								<span data-bind='text: location'></span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.noresults">
-				<div><span>Sorry, we cannot find any deals near you at this time. Try again later, or try another address.</span></div>
-				<button data-bind='click:backToSearch'>Continue</button>
-			</div>
 		</div>
-
+		<!-- noresults -->
+		<div class="pure-u-1" style="text-align:center;display:none;" data-bind="visible:screen()===$root.screenNames.noresults">
+			<h2>Sorry, we cannot find any deals near you at this time. Try again later, or try another address.</h2>
+			<button data-bind='click:backToSearch'>Continue</button>
+		</div>
 	</div>
 	<script src="app.bundle.js"></script>
 </body>
